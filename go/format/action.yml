@@ -1,0 +1,13 @@
+name: 'Go Format'
+description: 'Runs Go formatter.'
+runs:
+  using: "composite"
+  steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Format
+      uses: Jerome1337/gofmt-action@v1.0.4

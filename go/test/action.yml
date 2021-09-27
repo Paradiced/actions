@@ -1,0 +1,23 @@
+name: 'Go Test'
+description: 'Runs tests and uploads coverage report to Codecov.'
+inputs:
+  token:
+    description: 'Codecov Access Token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Test
+      shell: bash
+      run: go test ./... -race -coverprofile=coverage.out -covermode=atomic
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ inputs.token }}
+        file: ./coverage.out
